@@ -13,7 +13,7 @@
     "flask",
     "react"
   ],
-  "author": "mushroom",
+  "author": "Andrii Viityk",
   "license": "MIT",
   "devDependencies": {
     "axios": "^0.18.0",
