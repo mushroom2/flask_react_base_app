@@ -1,5 +1,8 @@
 import React from 'react'
 import axios from 'axios'
+import { MapDispatchToProps } from '../DowloadsList'
+import { connect } from 'react-redux'
+import {mapDispatchToProps} from "../DowloadsList/DownloadsList";
 
 class MyFileInput extends React.Component{
 
@@ -8,9 +11,14 @@ class MyFileInput extends React.Component{
         this.state = {files: []};
         this.handleFiles = this.handleFiles.bind(this);
         this.uploadFiles = this.uploadFiles.bind(this);
+        this.updateDownloadsList = this.updateDownloadsList.bind(this)
     }
 
-
+    updateDownloadsList(){
+        axios.get('/download')
+            .then(resp => {this.props.updateDownloadsLists(resp.data);})
+            .catch(err => console.log(err))
+    }
 
     handleFiles(files) {
       this.state.files = files
@@ -27,7 +35,8 @@ class MyFileInput extends React.Component{
             axios.post('/upload', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data'
-        }}).then(function (res) {
+        }}).then((res) => {
+                this.updateDownloadsList();
                 console.log(res)
                 })
                 .catch(function (err) {
@@ -52,4 +61,4 @@ class MyFileInput extends React.Component{
     }
 }
 
-export default MyFileInput
+export default connect((state => state), mapDispatchToProps)(MyFileInput)

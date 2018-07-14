@@ -28,8 +28,14 @@ def download(filename):
 
 @app.route('/download', methods=['GET'])
 def get_file_list():
-    return jsonify(os.listdir(app.config["UPLOAD_FOLDER"]))
-
+    res = []
+    for indx, f in enumerate(os.listdir(app.config["UPLOAD_FOLDER"])):
+        res.append({
+            'name': f,
+            'id': indx,
+            'size': round(os.path.getsize(os.path.join(app.config['UPLOAD_FOLDER'], f))/(1024**2), 3)
+        })
+    return jsonify(res)
 
 
 if __name__ == "__main__":
