@@ -1,7 +1,7 @@
 import os
 
-from flask import Flask, render_template
-from flask import request
+from flask import Flask, render_template, send_from_directory
+from flask import request, jsonify
 
 app = Flask(__name__, static_folder="../static/dist", template_folder="../static/templates")
 app.config["UPLOAD_FOLDER"] = '/home/mushroom/PycharmProjects/react_flask_fileform/flaskapp/server/store'
@@ -19,6 +19,17 @@ def upload_file():
         f = request.files['file']
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
         return 'file uploaded successfully'
+
+
+@app.route('/download/<path:filename>', methods=['GET', 'POST'])
+def download(filename):
+    return send_from_directory(directory=app.config["UPLOAD_FOLDER"], filename=filename)
+
+
+@app.route('/download', methods=['GET'])
+def get_file_list():
+    return jsonify(os.listdir(app.config["UPLOAD_FOLDER"]))
+
 
 
 if __name__ == "__main__":

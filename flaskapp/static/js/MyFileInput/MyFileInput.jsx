@@ -40,18 +40,15 @@ class MyFileInput extends React.Component{
 
     render(){
         return (
-            <div className="container">
-                <div className="col-md-12 text-center">
-
-                        <p> Upload Your file
-                            <input type="file" className="form-control" onChange={(e) => this.handleFiles(e.target.files)}/>
-                        </p>
-                    <p>
-                        <button className="btn btn-default" onClick={this.uploadFiles}>upload!</button>
-                    </p>
-                </div>
+            <div>
+                <p> Upload Your file
+                    <input type="file" className="form-control" onChange={(e) => this.handleFiles(e.target.files)}/>
+                </p>
+                <p>
+                    <button className="btn btn-default" onClick={this.uploadFiles}>upload!</button>
+                </p>
             </div>
-                )
+        )
     }
 }
 
